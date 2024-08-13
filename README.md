@@ -53,6 +53,9 @@ Run the application
    python app.py
 ```
 
+## PythonAnywhere
+
+Web app is available at: lorenzo1509.pythonanywhere.com
 
 ## Authors
 
