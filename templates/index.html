@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sudoku Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Sudoku Solver</h1>
+        <div class="content-wrapper">
+            <div class="sudoku-section">
+                <form method="post" action="/">
+                    <table class="sudoku-grid">
+                        {% for i in range(9) %}
+                        <tr>
+                            {% for j in range(9) %}
+                            <td>
+                                <input type="text" name="cell{{ i + 1 }}{{ j + 1 }}" maxlength="1" value="{{ request.form.get('cell' + (i + 1)|string + (j + 1)|string, '') }}" class="sudoku-cell">
+                            </td>
+                            {% endfor %}
+                        </tr>
+                        {% endfor %}
+                    </table>
+                    <div class="button-group">
+                        <button type="submit">Solve</button>
+                        <a href="{{ url_for('reset') }}" class="reset-button">Reset</a>
+                    </div>
+                </form>
+                {% if solution %}
+                <h2>Solution:</h2>
+                <table class="sudoku-grid">
+                    {% for row in solution %}
+                    <tr>
+                        {% for num in row %}
+                        <td>{{ num }}</td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </table>
+                {% endif %}
+            </div>
+            <div class="number-picker">
+                <h2>Select Number</h2>
+                <table class="number-grid">
+                    {% for num in range(1, 10) %}
+                        {% if loop.index % 3 == 1 %}
+                        <tr>
+                        {% endif %}
+                        <td>
+                            <button type="button" class="num-button" data-value="{{ num }}">{{ num }}</button>
+                        </td>
+                        {% if loop.index % 3 == 0 %}
+                        </tr>
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let selectedNumber = null;
+    
+            // Manages the selection and deselection of the number
+            document.querySelectorAll('.num-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    if (selectedNumber === this.getAttribute('data-value')) {
+                        // Deselect if you click on the same number
+                        selectedNumber = null;
+                        document.querySelectorAll('.num-button').forEach(btn => btn.classList.remove('selected'));
+                        document.querySelectorAll('.sudoku-cell').forEach(cell => cell.classList.remove('selected-cursor'));
+                    } else {
+                        // Select the new number
+                        selectedNumber = this.getAttribute('data-value');
+                        document.querySelectorAll('.num-button').forEach(btn => btn.classList.remove('selected'));
+                        this.classList.add('selected');
+                        document.querySelectorAll('.sudoku-cell').forEach(cell => cell.classList.add('selected-cursor'));
+                    }
+                });
+            });
+    
+            // Handles the entry of the selected number in the cell
+            document.querySelectorAll('.sudoku-cell').forEach(cell => {
+                cell.addEventListener('click', function() {
+                    if (selectedNumber) {
+                        this.value = selectedNumber;
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
