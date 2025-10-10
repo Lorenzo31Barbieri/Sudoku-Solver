@@ -28,6 +28,11 @@
                         <a href="{{ url_for('reset') }}" class="reset-button">Reset</a>
                     </div>
                 </form>
+
+                {% if status == 'Infeasible' %}
+                <h2 class="error-message">Impossible to solve. Check the input</h2>
+                {% endif %}
+
                 {% if solution %}
                 <h2>Solution:</h2>
                 <table class="sudoku-grid">

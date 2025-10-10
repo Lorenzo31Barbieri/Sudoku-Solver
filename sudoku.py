@@ -53,11 +53,15 @@ def solve_sudoku(puzzle):
                 model += x[i][j][puzzle[i-1][j-1]] == 1
 
     model.solve()
-
-    M = np.zeros((len(I), len(J)))
-    for i in I:
-        for j in J:
-            for k in K:
-                if x[i][j][k].varValue == 1:
-                    M[i-1, j-1] = k
-    return M.astype(int).tolist()
+    
+    # Check status
+    if model.status == LpStatusOptimal:
+        M = np.zeros((len(I), len(J)))
+        for i in I:
+            for j in J:
+                for k in K:
+                    if x[i][j][k].varValue == 1:
+                        M[i-1, j-1] = k
+        return M.astype(int).tolist(), LpStatus[model.status]
+    else:
+        return None, LpStatus[model.status]
