@@ -31,7 +31,7 @@ pip install Flask pulp numpy
 Clone the project
 
 ```bash
-  git clone https://github.com/your-username/sudoku-solver.git
+  git clone https://github.com/Lorenzo31Barbieri/sudoku-solver.git
 ```
 
 Go to the project directory
