@@ -43,7 +43,6 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  pip freeze > requirements.txt
   pip install -r requirements.txt
 ```
 
@@ -52,10 +51,6 @@ Run the application
 ```bash
    python app.py
 ```
-
-## PythonAnywhere
-
-Web app is available at: [www.lorenzo1509.pythonanywhere.com](https://lorenzo1509.pythonanywhere.com/)
 
 
 ## Authors
